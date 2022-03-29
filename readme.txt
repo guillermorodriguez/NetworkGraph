@@ -8,7 +8,7 @@ python network.py -file [FILE] -lines [LINES]
 [LINES] = Number of lines from file to process, negative values entail complete processing
 
 Installation Instructions
-piip install pyvis
+pip install pyvis
 
 Contact Information
 Guillermo Rodriguez 

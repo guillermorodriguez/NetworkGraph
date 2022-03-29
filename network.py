@@ -5,13 +5,14 @@ from pyvis.network import Network
 
 def createNetworkGraph(_matrix):
     _network = Network()
-    #_network.show_buttons(filter_=True)
+    _network.show_buttons(filter_=True)
 
     # Create nodes
     for row in range(len(_matrix)):
         # New node
         _node_weight = getWeight(_matrix, row)
-        _network.add_node(row, label=row, title="Node: {0} - Weight: {1}".format(row, _node_weight), value=10+_node_weight)
+        _color = "#{0:02x}{1:02x}FF".format(int(100.0/(_node_weight+1)), int(100.0/(_node_weight+1)))
+        _network.add_node(row, label=row, title="Node: {0} - Weight: {1}".format(row, _node_weight), value=10+_node_weight, color=_color)
     
     # Create relationships
     for row in range(len(_matrix)):
@@ -23,7 +24,7 @@ def createNetworkGraph(_matrix):
 
     _network.show('nodes.html')
 
-def createHistogram(_matrix):
+def createHistogram(_weight):
     pass
 
 def getWeight(_matrix, _node):
