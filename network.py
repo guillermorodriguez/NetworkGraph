@@ -7,7 +7,7 @@ from pyvis.network import Network
 def createNetworkGraph(_matrix):
    
     _network = Network()
-    _network.show_buttons(filter_=True)
+    #_network.show_buttons(filter_=['physics'])
 
     # Create nodes
     for key, value in _matrix.items():
@@ -17,16 +17,20 @@ def createNetworkGraph(_matrix):
         _network.add_node(key, label=key, title="Node: {0} - Weight: {1}".format(key, _node_weight), value=10+_node_weight, color=_color)
     
     # Create relationships
-    for row in range(len(_matrix)):
-        for column in range(len(_matrix[row])):
+    for source, sinks in _matrix.items():
+        for sink in sinks:
+            if sink not in _matrix.keys():
+                # New node
+                _node_weight = 1
+                _color = "#{0:02x}{1:02x}FF".format(int(200/(_node_weight+1)), int(75.0/(_node_weight+1)))
+                _network.add_node(sink, label=sink, title="Node: {0} - Weight: {1}".format(sink, _node_weight), value=10+_node_weight, color=_color)
 
-            if _matrix[row][column] == 1:
-                # New relationship
-                _network.add_edge(row, column)
+            # New relationship
+            _network.add_edge(source, sink)
 
     _network.show('nodes.html')
 
-def createHistograph(_matrix):
+def createHistoGraph(_matrix):
     pass
 
 print('Started')
@@ -57,7 +61,7 @@ if parse.file and parse.lines:
         createNetworkGraph(_matrix)
 
         # Create histograph
-        createHistograph(_matrix)
+        createHistoGraph(_matrix)
 
     except Exception as err:
         print(err)
