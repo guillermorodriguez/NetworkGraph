@@ -5,12 +5,18 @@ from pyvis.network import Network
 def createNetworkGraph(_matrix):
     _network = Network()
 
+    # Create nodes
     for row in range(len(_matrix)):
-        
+        # New node
         _network.add_node(row, label=row)
-        
-        for entry in _matrix[row]:
-            print(entry, sep=' ')
+    
+    # Create relationships
+    for row in range(len(_matrix)):
+        for column in range(len(_matrix[row])):
+
+            if _matrix[row][column] == 1:
+                # New relationship
+                _network.add_edge(row, column)
 
     _network.show('nodes.html')
 
