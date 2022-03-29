@@ -1,8 +1,16 @@
 import os
 import argparse
+import plotly
+import networkx
+
+def createNetworkGraph(_matrix):
+    pass
+
+def createHistogram(_matrix):
+    pass
+
 
 print('Started')
-
 
 parser = argparse.ArgumentParser(prog='netowrk.py')
 parser.add_argument('-file', help='Network path file to process')
@@ -57,6 +65,12 @@ if parse.file and parse.lines:
                 _current_line += 1
 
         print('Relational Matrix', _matrix)
+
+        # Create network chart
+        createNetworkGraph(_matrix)
+
+        # Create histograph
+        createHistogram(_matrix)
 
     except Exception as err:
         print(err)
