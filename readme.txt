@@ -1,7 +1,8 @@
 Configuration Instructions
 python=3.9.12
-plotly=5.6.0
-networkx=2.7.1 
+#plotly=5.6.0
+#networkx=2.7.1 
+pyvis=0.1.9
 
 Operating Instructions
 python network.py -file [FILE] -lines [LINES]
@@ -9,8 +10,9 @@ python network.py -file [FILE] -lines [LINES]
 [LINES] = Number of lines from file to process, negative values entail complete processing
 
 Installation Instructions
-pip install plotly
-pip install networkx
+#pip install plotly
+#pip install networkx
+piip install pyvis
 
 Contact Information
 Guillermo Rodriguez 

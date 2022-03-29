@@ -1,10 +1,19 @@
 import os
 import argparse
-import plotly
-import networkx
+from pyvis.network import Network
 
 def createNetworkGraph(_matrix):
-    pass
+    _network = Network()
+
+    for row in range(len(_matrix)):
+        
+        _network.add_node(row, label=row)
+        
+        for entry in _matrix[row]:
+            print(entry, sep=' ')
+
+    _network.show('nodes.html')
+
 
 def createHistogram(_matrix):
     pass
