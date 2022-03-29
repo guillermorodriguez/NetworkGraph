@@ -41,7 +41,7 @@ parser.add_argument('-lines', help='Maximum number of lines to process, negative
 parse = parser.parse_args()
 
 if parse.file and parse.lines:
-    _source_file = os.getcwd() + '//' + parse.file;         # File to process
+    _source_file = os.path.join( os.getcwd(), parse.file);         # File to process
     _matrix = {}
 
     try:
