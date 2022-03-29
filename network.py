@@ -1,14 +1,16 @@
 import os
 import argparse
+from turtle import title
 from pyvis.network import Network
 
 def createNetworkGraph(_matrix):
     _network = Network()
+    _network.show_buttons(filter_=True)
 
     # Create nodes
     for row in range(len(_matrix)):
         # New node
-        _network.add_node(row, label=row)
+        _network.add_node(row, label=row, title='Node: ' + str(row))
     
     # Create relationships
     for row in range(len(_matrix)):

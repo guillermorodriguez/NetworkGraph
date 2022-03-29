@@ -23,6 +23,12 @@
         
 
         
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
 
         
 </style>
@@ -32,6 +38,8 @@
 <body>
 <div id = "mynetwork"></div>
 
+
+<div id = "config"></div>
 
 <script type="text/javascript">
 
@@ -50,7 +58,7 @@
         
 
         // parsing and collecting nodes and edges from the python
-        nodes = new vis.DataSet([{"id": 0, "label": 0, "shape": "dot"}, {"id": 1, "label": 1, "shape": "dot"}, {"id": 2, "label": 2, "shape": "dot"}, {"id": 3, "label": 3, "shape": "dot"}, {"id": 4, "label": 4, "shape": "dot"}, {"id": 5, "label": 5, "shape": "dot"}, {"id": 6, "label": 6, "shape": "dot"}, {"id": 7, "label": 7, "shape": "dot"}, {"id": 8, "label": 8, "shape": "dot"}, {"id": 9, "label": 9, "shape": "dot"}, {"id": 10, "label": 10, "shape": "dot"}]);
+        nodes = new vis.DataSet([{"id": 0, "label": 0, "shape": "dot", "title": "Node: 0"}, {"id": 1, "label": 1, "shape": "dot", "title": "Node: 1"}, {"id": 2, "label": 2, "shape": "dot", "title": "Node: 2"}, {"id": 3, "label": 3, "shape": "dot", "title": "Node: 3"}, {"id": 4, "label": 4, "shape": "dot", "title": "Node: 4"}, {"id": 5, "label": 5, "shape": "dot", "title": "Node: 5"}, {"id": 6, "label": 6, "shape": "dot", "title": "Node: 6"}, {"id": 7, "label": 7, "shape": "dot", "title": "Node: 7"}, {"id": 8, "label": 8, "shape": "dot", "title": "Node: 8"}, {"id": 9, "label": 9, "shape": "dot", "title": "Node: 9"}, {"id": 10, "label": 10, "shape": "dot", "title": "Node: 10"}]);
         edges = new vis.DataSet([{"from": 0, "to": 1}, {"from": 0, "to": 5}, {"from": 0, "to": 10}, {"from": 3, "to": 0}, {"from": 3, "to": 6}, {"from": 7, "to": 9}, {"from": 7, "to": 10}, {"from": 9, "to": 3}, {"from": 9, "to": 4}, {"from": 10, "to": 6}]);
 
         // adding nodes and edges to the graph
@@ -58,7 +66,8 @@
 
         var options = {
     "configure": {
-        "enabled": false
+        "enabled": true,
+        "filter": true
     },
     "edges": {
         "color": {
@@ -88,6 +97,10 @@
         
         
 
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
         
 
         network = new vis.Network(container, data, options);
