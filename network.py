@@ -11,7 +11,7 @@ def createNetworkGraph(_matrix):
     for row in range(len(_matrix)):
         # New node
         _node_weight = getWeight(_matrix, row)
-        _network.add_node(row, label=row, title="Node: {0} - Weight: {1}".format(row, _node_weight), value=10*_node_weight)
+        _network.add_node(row, label=row, title="Node: {0} - Weight: {1}".format(row, _node_weight), value=10+_node_weight)
     
     # Create relationships
     for row in range(len(_matrix)):
@@ -30,10 +30,10 @@ def getWeight(_matrix, _node):
     weight = 1
 
     for row in range(len(_matrix)):
-        if _matrix[row][_node] == 1:
+        if _matrix[row][_node] == 1 or _matrix[_node][row] == 1:
             weight += 1;
 
-    return weight
+    return weight-1
 
 print('Started')
 
