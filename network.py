@@ -8,6 +8,7 @@ print('Started')
 
 parser = argparse.ArgumentParser(prog='network.py')
 parser.add_argument('-file', help='Network path file to process')
+parser.add_argument('-slice', help='Individual 250 records to start to take into consideration from')
 parse = parser.parse_args()
 
 def createNetworkGraph(_matrix):
@@ -50,20 +51,25 @@ def createHistogram(_matrix):
     _plot.show()
     _plot.write_html(parse.file + '_histogram.html')
 
-if parse.file:
+if parse.file and parse.slice:
     _source_file = os.path.join( os.getcwd(), parse.file);      
     _matrix = {}
+    _SAMPLE_SIZE = 250
 
     try:
         # Create data dictionary
+        _entry = 1;
         with open(_source_file, 'r') as _network_paths:
             for entry in _network_paths:
                 _source, _sink = int(entry.strip('\n').split('\t')[0]), int(entry.strip('\n').split('\t')[1])
 
-                if _source in _matrix.keys():
-                    _matrix[_source].append(_sink)
-                else:
-                    _matrix[_source] = [_sink]
+                if _entry > int(parse.slice) and len(_matrix.keys()) < _SAMPLE_SIZE:
+                    if _source in _matrix.keys():
+                        _matrix[_source].append(_sink)
+                    else:
+                        _matrix[_source] = [_sink]
+
+                _entry += 1
 
         print('Relational Matrix', _matrix)
 
