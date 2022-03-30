@@ -1,8 +1,14 @@
 import os
 import argparse
 import pstats
-
 from pyvis.network import Network
+import plotly.graph_objects as go
+
+print('Started')
+
+parser = argparse.ArgumentParser(prog='network.py')
+parser.add_argument('-file', help='Network path file to process')
+parse = parser.parse_args()
 
 def createNetworkGraph(_matrix):
    
@@ -28,20 +34,23 @@ def createNetworkGraph(_matrix):
             # New relationship
             _network.add_edge(source, sink)
 
-    _network.show('nodes.html')
+    _network.show('routers_data_undirected_result.html')
 
-def createHistoGraph(_matrix):
-    pass
+def createHistogram(_matrix):
+    _plot = go.Figure()
 
-print('Started')
+    x = []
+    y = []
 
-parser = argparse.ArgumentParser(prog='netowrk.py')
-parser.add_argument('-file', help='Network path file to process')
-parser.add_argument('-lines', help='Maximum number of lines to process, negative values denote complete processing of file')
-parse = parser.parse_args()
+    for key, value in _matrix.items():
+        x.append(key);
+        y.append(len(value))
 
-if parse.file and parse.lines:
-    _source_file = os.path.join( os.getcwd(), parse.file);         # File to process
+    _plot.add_trace(go.Histogram(y=y, x=x, name='Node Links'))
+    _plot.show()
+
+if parse.file:
+    _source_file = os.path.join( os.getcwd(), parse.file);      
     _matrix = {}
 
     try:
@@ -49,7 +58,7 @@ if parse.file and parse.lines:
         with open(_source_file, 'r') as _network_paths:
             for entry in _network_paths:
                 _source, _sink = int(entry.strip('\n').split('\t')[0]), int(entry.strip('\n').split('\t')[1])
-                
+
                 if _source in _matrix.keys():
                     _matrix[_source].append(_sink)
                 else:
@@ -58,10 +67,10 @@ if parse.file and parse.lines:
         print('Relational Matrix', _matrix)
 
         # Create network chart
-        createNetworkGraph(_matrix)
+        # createNetworkGraph(_matrix)
 
-        # Create histograph
-        createHistoGraph(_matrix)
+        # Create histogram
+        createHistogram(_matrix)
 
     except Exception as err:
         print(err)
