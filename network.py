@@ -15,6 +15,8 @@ def createNetworkGraph(_matrix):
    
     _network = Network()
     #_network.show_buttons(filter_=['physics'])
+    _network.width = 1000
+    _network.height = 800
 
     # Create nodes
     for key, value in _matrix.items():
