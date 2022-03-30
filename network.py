@@ -35,7 +35,7 @@ def createNetworkGraph(_matrix):
             # New relationship
             _network.add_edge(source, sink)
 
-    _network.show(parse.file + '_netowrk_graph.html')
+    _network.show(os.path.join(os.getcwd(), 'output', parse.file + '_network_graph.html'))
 
 def createHistogram(_matrix):
     _plot = go.Figure()
@@ -49,16 +49,16 @@ def createHistogram(_matrix):
 
     _plot.add_trace(go.Histogram(y=y, x=x, name='Node Links'))
     _plot.show()
-    _plot.write_html(parse.file + '_histogram.html')
+    _plot.write_html(os.path.join(os.getcwd(), 'output', parse.file + '_histogram.html'))
 
 if parse.file and parse.slice:
-    _source_file = os.path.join( os.getcwd(), parse.file);      
+    _source_file = os.path.join( os.getcwd(), 'data', parse.file);      
     _matrix = {}
     _SAMPLE_SIZE = 250
 
     try:
         # Create data dictionary
-        _entry = 1;
+        _entry = 1
         with open(_source_file, 'r') as _network_paths:
             for entry in _network_paths:
                 _source, _sink = int(entry.strip('\n').split('\t')[0]), int(entry.strip('\n').split('\t')[1])
