@@ -34,7 +34,7 @@ def createNetworkGraph(_matrix):
             # New relationship
             _network.add_edge(source, sink)
 
-    _network.show('routers_data_undirected_result.html')
+    _network.show(parse.file + '_netowrk_graph.html')
 
 def createHistogram(_matrix):
     _plot = go.Figure()
@@ -48,6 +48,7 @@ def createHistogram(_matrix):
 
     _plot.add_trace(go.Histogram(y=y, x=x, name='Node Links'))
     _plot.show()
+    _plot.write_html(parse.file + '_histogram.html')
 
 if parse.file:
     _source_file = os.path.join( os.getcwd(), parse.file);      
@@ -67,7 +68,7 @@ if parse.file:
         print('Relational Matrix', _matrix)
 
         # Create network chart
-        # createNetworkGraph(_matrix)
+        createNetworkGraph(_matrix)
 
         # Create histogram
         createHistogram(_matrix)
