@@ -48,7 +48,7 @@ def createHistogram(_x, _y):
 if parse.file and parse.slice:
     _source_file = os.path.join( os.getcwd(), 'data', parse.file);      
     _matrix = {}
-    _SAMPLE_SIZE = 2000
+    _SAMPLE_SIZE = 20
 
     try:
         # Create data dictionary & histogram data entries
@@ -76,7 +76,7 @@ if parse.file and parse.slice:
         createNetworkGraph(_matrix)
 
         # Create histogram
-        # createHistogram(_x, _y)
+        createHistogram(_x, _y)
 
     except Exception as err:
         print(err)
