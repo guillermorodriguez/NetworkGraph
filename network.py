@@ -7,7 +7,7 @@ print('Started')
 
 parser = argparse.ArgumentParser(prog='network.py')
 parser.add_argument('-file', help='Network path file to process')
-parser.add_argument('-slice', help='Individual 200 records to start to take into consideration from')
+parser.add_argument('-slice', help='Individual 200 records to start to take into consideration from, zero indexed')
 parse = parser.parse_args()
 
 def createNetworkGraph(_matrix):
@@ -48,18 +48,18 @@ def createHistogram(_x, _y):
 if parse.file and parse.slice:
     _source_file = os.path.join( os.getcwd(), 'data', parse.file);      
     _matrix = {}
-    _SAMPLE_SIZE = 200
+    _SAMPLE_SIZE = 2000
 
     try:
         # Create data dictionary & histogram data entries
-        _entry = 1
+        _entry = 0
         _x = []
         _y =[]
         with open(_source_file, 'r') as _network_paths:
             for entry in _network_paths:
                 _source, _sink = int(entry.strip('\n').split('\t')[0]), int(entry.strip('\n').split('\t')[1])
 
-                if _entry > int(parse.slice) and len(_matrix.keys()) < _SAMPLE_SIZE:
+                if _entry >= int(parse.slice) and len(_matrix.keys()) < _SAMPLE_SIZE:
                     _x.append(_source)
                     _y.append(_sink)
 
@@ -76,7 +76,7 @@ if parse.file and parse.slice:
         createNetworkGraph(_matrix)
 
         # Create histogram
-        createHistogram(_x, _y)
+        # createHistogram(_x, _y)
 
     except Exception as err:
         print(err)
