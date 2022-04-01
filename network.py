@@ -1,6 +1,5 @@
 import os
 import argparse
-import pstats
 from pyvis.network import Network
 import plotly.graph_objects as go
 
@@ -8,12 +7,12 @@ print('Started')
 
 parser = argparse.ArgumentParser(prog='network.py')
 parser.add_argument('-file', help='Network path file to process')
-parser.add_argument('-slice', help='Individual 250 records to start to take into consideration from')
+parser.add_argument('-slice', help='Individual 200 records to start to take into consideration from')
 parse = parser.parse_args()
 
 def createNetworkGraph(_matrix):
    
-    _network = Network()
+    _network = Network(notebook=True)
     #_network.show_buttons(filter_=['physics'])
     _network.width = 1000
     _network.height = 800
@@ -39,33 +38,31 @@ def createNetworkGraph(_matrix):
 
     _network.show(os.path.join(os.getcwd(), 'output', parse.file + '_network_graph.html'))
 
-def createHistogram(_matrix):
+def createHistogram(_x, _y):
     _plot = go.Figure()
 
-    x = []
-    y = []
-
-    for key, value in _matrix.items():
-        x.append(key);
-        y.append(len(value))
-
-    _plot.add_trace(go.Histogram(y=y, x=x, name='Node Links'))
+    _plot.add_trace(go.Histogram(y=_y, x=_x, name='Node Links'))
     _plot.show()
     _plot.write_html(os.path.join(os.getcwd(), 'output', parse.file + '_histogram.html'))
 
 if parse.file and parse.slice:
     _source_file = os.path.join( os.getcwd(), 'data', parse.file);      
     _matrix = {}
-    _SAMPLE_SIZE = 250
+    _SAMPLE_SIZE = 200
 
     try:
-        # Create data dictionary
+        # Create data dictionary & histogram data entries
         _entry = 1
+        _x = []
+        _y =[]
         with open(_source_file, 'r') as _network_paths:
             for entry in _network_paths:
                 _source, _sink = int(entry.strip('\n').split('\t')[0]), int(entry.strip('\n').split('\t')[1])
 
                 if _entry > int(parse.slice) and len(_matrix.keys()) < _SAMPLE_SIZE:
+                    _x.append(_source)
+                    _y.append(_sink)
+
                     if _source in _matrix.keys():
                         _matrix[_source].append(_sink)
                     else:
@@ -79,7 +76,7 @@ if parse.file and parse.slice:
         createNetworkGraph(_matrix)
 
         # Create histogram
-        createHistogram(_matrix)
+        createHistogram(_x, _y)
 
     except Exception as err:
         print(err)

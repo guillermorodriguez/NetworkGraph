@@ -17,3 +17,6 @@ Guillermo Rodriguez
 Jaswanth Vishnumolakala
 Vijay Kumar Thanikonda
 Yaswanth Kumar Chaganti
+
+Execute
+MacOS: python3 network.py -file [Data file] -slice [Individual 200 entries to take starting from]
